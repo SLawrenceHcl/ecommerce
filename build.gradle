@@ -1,0 +1,62 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.7'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.sample'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudGcpVersion', "3.2.1")
+	set('springCloudVersion', "2021.0.1")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// https://mvnrepository.com/artifact/org.drools/drools-core
+	implementation group: 'org.drools', name: 'drools-core', version: '7.68.0.Final'
+	// https://mvnrepository.com/artifact/org.drools/drools-compiler
+	implementation group: 'org.drools', name: 'drools-compiler', version: '7.68.0.Final'
+	// https://mvnrepository.com/artifact/org.drools/drools-decisiontables
+	implementation group: 'org.drools', name: 'drools-decisiontables', version: '7.68.0.Final'
+
+	implementation 'com.google.cloud:spring-cloud-gcp-starter'
+	implementation 'com.google.cloud:spring-cloud-gcp-starter-pubsub'
+	implementation 'com.google.cloud:spring-cloud-gcp-starter-storage'
+
+	implementation platform('com.google.cloud:libraries-bom:25.2.0')
+	implementation 'com.google.cloud:google-cloud-pubsub'
+
+
+
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

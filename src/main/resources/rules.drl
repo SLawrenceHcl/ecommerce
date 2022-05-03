@@ -1,0 +1,15 @@
+import com.sample.ecommerce
+
+rule "Car type is truck and cost over 10,000 discount of 5%"
+    when
+        temp : droolSample( type=="truck" && cost > 10000 );
+    then
+        temp.setDiscount("3%");
+end;
+
+rule "Car type is truck and cost over 100,000 discount of 10%"
+    when
+        temp : droolSample( type=="truck" && cost > 100000 );
+    then
+        temp.setDiscount("10%");
+end;
